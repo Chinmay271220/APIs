@@ -1,9 +1,15 @@
-const express = require("express");
-const mysql = require("mysql2/promise");
-const { MongoClient, ObjectId } = require('mongodb');
+require('dotenv').config();
+
+const { MongoClient, ObjectId } = require('mongodb'); // Ensure this is imported only once
+const express = require('express');
+const mysql = require('mysql2/promise');
+
+const mongoUri = process.env.MONGO_URI; // Declare once
+const mongoClient = new MongoClient(mongoUri); // Declare once
 
 const app = express();
 app.use(express.json());
+
 
 const mysqlPool = mysql.createPool({
   host: "34.28.223.34",
@@ -15,9 +21,6 @@ const mysqlPool = mysql.createPool({
   queueLimit: 0,
 });
 
-// MongoDB connection URI
-const mongoUri = 'mongodb+srv://ckawl:chin1234@cluster0.hyljd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
-const mongoClient = new MongoClient(mongoUri);
 
 let dbs = {}; // Object to store connected databases
 
